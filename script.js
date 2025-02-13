@@ -26,6 +26,7 @@ async function detectObjects(model) {
 
         predictions.forEach(prediction => {
             const [x, y, width, height] = prediction.bbox;
+            const label = prediction.class === "person" ? "Aurelius" : prediction.class;
 
             ctx.beginPath();
             ctx.rect(x, y, width, height);
@@ -35,7 +36,7 @@ async function detectObjects(model) {
 
             ctx.fillStyle = "red";
             ctx.font = "16px Arial";
-            ctx.fillText(`${prediction.class} (${Math.round(prediction.score * 100)}%)`, x, y > 10 ? y - 5 : 10);
+            ctx.fillText(`${label} (${Math.round(prediction.score * 100)}%)`, x, y > 10 ? y - 5 : 10);
         });
 
         requestAnimationFrame(frameLoop);
